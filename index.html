@@ -1,0 +1,160 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>StudySprint — Ultimate Student Workspace</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="#overview"><span class="brand-mark">S</span><span>StudySprint<small>STUDENT WORKSPACE</small></span></a>
+  <div class="nav-label">WORKSPACE</div>
+  <nav id="navigation">
+    <a class="nav-link active" href="#overview">◈ Overview</a>
+    <a class="nav-link" href="#tasks">☷ My tasks</a>
+    <a class="nav-link" href="#calendar">▦ Calendar & exams</a>
+    <a class="nav-link" href="#streaks">♨ Daily streaks</a>
+    <a class="nav-link" href="#analytics">◫ Subject analytics</a>
+    <a class="nav-link" href="#weekly">▥ Weekly progress</a>
+    <a class="nav-link" href="#focus">◷ Focus room</a>
+    <a class="nav-link" href="#rewards">🏆 XP & rewards</a>
+    <a class="nav-link" href="#assistant">✦ Study assistant</a>
+    <a class="nav-link" href="#settings">⚙ Profile & backup</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="tip"><b>✦ Daily reminder</b><p>Small, consistent steps lead to big results.</p></div>
+    <div class="profile-mini"><span class="avatar" id="sidebarAvatar">S</span><span><b id="sidebarName">Student</b><small>Keep moving forward</small></span></div>
+  </div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <button id="menuToggle" class="icon-btn mobile-only" aria-label="Open menu">☰</button>
+  <div><div class="eyebrow">YOUR PERSONAL STUDY SPACE</div><h1 id="pageTitle">Overview</h1></div>
+  <div class="top-date" id="todayLabel"></div>
+</header>
+
+<section class="page active" id="overview">
+  <div class="hero">
+    <div><span class="eyebrow">YOUR NEXT CHAPTER STARTS NOW</span><h2>Make today count.<br><em>One task at a time.</em></h2><p>Plan your workload, protect your focus, and build a stronger study routine.</p><a class="button primary" href="#tasks">View my tasks →</a></div>
+    <div class="hero-art">✦<div>▤</div></div>
+  </div>
+  <div class="stats four">
+    <article class="stat"><span>Total tasks</span><strong id="totalTasks">0</strong><small>All study tasks</small></article>
+    <article class="stat"><span>Completed</span><strong id="completedTasks">0</strong><small>Tasks checked off</small></article>
+    <article class="stat"><span>Pending</span><strong id="pendingTasks">0</strong><small>Still on your list</small></article>
+    <article class="stat"><span>Completion rate</span><strong id="completionRate">0%</strong><small>Overall progress</small></article>
+  </div>
+  <div class="grid two">
+    <article class="panel"><div class="panel-head"><div><span class="eyebrow">PERSONALIZED</span><h3>Smart Study Planner</h3></div><span class="accent">✦</span></div><div id="smartRecommendation" class="soft-box"></div><button class="button secondary mt" id="refreshRecommendation">Refresh recommendation ↻</button></article>
+    <article class="panel"><div class="panel-head"><div><span class="eyebrow">TODAY'S TARGET</span><h3>Daily study goal</h3></div><span class="accent">◎</span></div><div class="goal-line"><strong id="overviewGoalProgress">0</strong><span id="overviewGoalTarget">/ 3 tasks</span></div><div class="progress"><i id="overviewGoalBar"></i></div><p class="muted" id="overviewGoalMessage"></p><a class="text-link" href="#streaks">Manage daily goal →</a></article>
+  </div>
+  <div class="grid two">
+    <article class="panel"><div class="panel-head"><h3>Next deadlines & exams</h3><a class="text-link" href="#calendar">View calendar →</a></div><div id="overviewUpcoming" class="stack"></div></article>
+    <article class="panel"><div class="panel-head"><h3>Today's tasks</h3><a class="text-link" href="#tasks">View all →</a></div><div id="overviewTodayTasks" class="stack"></div></article>
+  </div>
+</section>
+
+<section class="page" id="tasks">
+  <div class="section-intro"><span class="eyebrow">STAY ORGANIZED</span><h2>My tasks</h2><p>Capture your workload and turn it into manageable steps.</p></div>
+  <article class="panel"><h3>Add a study task</h3>
+    <form id="taskForm" class="form-grid">
+      <label class="wide">Task name<input id="taskInput" required maxlength="120" placeholder="e.g. Revise probability distributions"></label>
+      <label>Subject<input id="subjectInput" maxlength="80" placeholder="Mathematics"></label>
+      <label>Due date<input id="dueDateInput" type="date" required></label>
+      <label>Priority<select id="priorityInput"><option>Medium</option><option>High</option><option>Low</option></select></label>
+      <label>Estimated time (min)<input id="effortInput" type="number" min="5" max="1440" value="30" required></label>
+      <button class="button primary align-end" type="submit">＋ Add task</button>
+    </form>
+  </article>
+  <article class="panel"><div class="panel-head"><div><h3>Your task list</h3><small id="taskCountLabel">0 tasks</small></div><div class="inline"><select id="taskFilter"><option value="all">All tasks</option><option value="pending">Pending</option><option value="completed">Completed</option></select><button class="button danger" id="clearTasks">Clear all</button></div></div><div id="taskList" class="task-list"></div></article>
+</section>
+
+<section class="page" id="calendar">
+  <div class="section-intro"><span class="eyebrow">PLAN AHEAD</span><h2>Calendar & exam planner</h2><p>See your weekly workload and keep exam dates in one place.</p></div>
+  <div class="panel calendar-toolbar"><div class="inline"><button class="button secondary" id="previousWeek">←</button><button class="button secondary" id="todayWeek">Today</button><button class="button secondary" id="nextWeek">→</button><h3 id="weekRangeLabel">This week</h3></div><label>Jump to date<input id="calendarJumpDate" type="date"></label></div>
+  <div class="legend"><span>🟣 Study task</span><span>🔵 Exam</span><span>🔴 High priority</span></div>
+  <div id="weeklyCalendar" class="weekly-calendar panel"></div>
+  <div class="grid two">
+    <article class="panel"><div class="panel-head"><h3>Selected day</h3><small id="selectedDateLabel"></small></div><div id="selectedDayItems" class="stack"></div></article>
+    <article class="panel"><div class="panel-head"><h3>Add an exam</h3><span class="accent">✎</span></div>
+      <form id="examForm" class="form-grid one">
+        <label>Exam name<input id="examTitle" maxlength="120" required placeholder="Mid-semester exam"></label>
+        <label>Subject<input id="examSubject" maxlength="80" required placeholder="Data Structures"></label>
+        <div class="grid two compact"><label>Exam date<input id="examDate" type="date" required></label><label>Time<input id="examTime" type="time"></label></div>
+        <label>Location (optional)<input id="examLocation" maxlength="120" placeholder="Exam hall"></label>
+        <label>Preparation notes<textarea id="examNotes" maxlength="1000" rows="3" placeholder="Topics to revise..."></textarea></label>
+        <button class="button primary">＋ Add exam</button>
+      </form>
+    </article>
+  </div>
+  <article class="panel"><div class="panel-head"><h3>Upcoming exams</h3><small id="examCountLabel">0 exams</small></div><div id="examList" class="exam-grid"></div></article>
+</section>
+
+<section class="page" id="streaks">
+  <div class="section-intro"><span class="eyebrow">BUILD CONSISTENCY</span><h2>Daily streaks & goals</h2><p>Choose a daily target and celebrate showing up consistently.</p></div>
+  <div class="stats three"><article class="stat"><span>Current streak 🔥</span><strong id="currentStreak">0 days</strong><small>Consecutive goal days</small></article><article class="stat"><span>Best streak 🏆</span><strong id="bestStreak">0 days</strong><small>Your personal best</small></article><article class="stat"><span>Today's progress</span><strong id="dailyProgressText">0 / 3</strong><small>Completed tasks today</small></article></div>
+  <div class="grid two">
+    <article class="panel"><h3>Set your daily goal</h3><form id="goalForm" class="inline goal-form"><label>Tasks per day<input id="dailyGoalInput" type="number" min="1" max="50" value="3" required></label><button class="button primary">Save goal</button></form><div class="goal-line"><strong id="dailyGoalProgress">0</strong><span id="dailyGoalTarget">/ 3 tasks</span></div><div class="progress"><i id="dailyGoalBar"></i></div><p id="dailyGoalMessage" class="muted"></p></article>
+    <article class="panel"><h3>Last 7 days</h3><div id="activityWeek" class="activity-week"></div></article>
+  </div>
+  <article class="panel"><h3>Milestones</h3><div id="streakMilestones" class="badge-grid"></div></article>
+</section>
+
+<section class="page" id="analytics">
+  <div class="section-intro"><span class="eyebrow">KNOW YOUR WORKLOAD</span><h2>Subject analytics</h2><p>Understand completion, effort, and outstanding tasks for each subject.</p></div>
+  <div class="stats three"><article class="stat"><span>Subjects tracked</span><strong id="analyticsSubjectCount">0</strong></article><article class="stat"><span>Pending study time</span><strong id="analyticsPendingTime">0m</strong></article><article class="stat"><span>Overall completion</span><strong id="analyticsOverallRate">0%</strong></article></div>
+  <div class="grid two"><article class="panel"><h3>Tasks by subject</h3><div id="subjectChart" class="bar-list"></div></article><article class="panel"><h3>Study insights</h3><div id="studyInsights" class="stack"></div></article></div>
+  <article class="panel"><div class="panel-head"><h3>Detailed performance</h3><small id="subjectRowCount">0 subjects</small></div><div class="table-scroll"><table><thead><tr><th>Subject</th><th>Total</th><th>Done</th><th>Pending</th><th>Completion</th><th>Pending time</th></tr></thead><tbody id="subjectTableBody"></tbody></table></div></article>
+</section>
+
+<section class="page" id="weekly">
+  <div class="section-intro"><span class="eyebrow">CONSISTENCY OVER TIME</span><h2>Weekly progress</h2><p>Review your task completion over the last seven days.</p></div>
+  <article class="panel"><h3>Completed tasks</h3><div id="weeklyChart" class="weekly-chart"></div><div class="chart-footer"><span>Daily completed tasks</span><strong id="weeklyTotal">0 completed this week</strong></div></article>
+</section>
+
+<section class="page" id="focus">
+  <div class="section-intro"><span class="eyebrow">DEEP WORK</span><h2>Focus room</h2><p>Link a session to a task, track time by subject, and stay on track.</p></div>
+  <div class="grid two">
+    <article class="panel focus-panel"><h3>Protect your attention</h3><label>Focus task<select id="focusTaskSelect"><option value="">General study session</option></select></label><div class="inline presets"><button class="button secondary active" data-minutes="25">25 min focus</button><button class="button secondary" data-minutes="15">15 min</button><button class="button secondary" data-minutes="5">5 min break</button></div><div class="timer-ring"><strong id="timerDisplay">25:00</strong><small id="timerStatus">Ready to focus</small></div><div class="inline center"><button id="startTimer" class="button primary">Start focus</button><button id="resetTimer" class="button secondary">Reset</button></div><p class="muted center">Keep StudySprint open while the timer runs.</p></article>
+    <article class="panel"><h3>Study time insights</h3><div class="stats two mini"><div class="stat"><span>Total focus time</span><strong id="totalFocusTime">0m</strong></div><div class="stat"><span>Sessions</span><strong id="sessionTotal">0</strong></div></div><h4>Time by subject</h4><div id="focusBySubject" class="stack"></div><h4>Recent sessions</h4><div id="sessionHistory" class="stack"></div></article>
+  </div>
+</section>
+
+<section class="page" id="rewards">
+  <div class="section-intro"><span class="eyebrow">MAKE PROGRESS VISIBLE</span><h2>XP, levels & rewards</h2><p>Earn experience for finishing tasks and completing focus sessions.</p></div>
+  <div class="stats three"><article class="stat"><span>Total XP ✨</span><strong id="xpTotal">0 XP</strong><small>Lifetime earned points</small></article><article class="stat"><span>Current level</span><strong id="xpLevel">Level 1</strong><small id="xpNext">100 XP to next level</small></article><article class="stat"><span>Unlocked badges</span><strong id="xpBadgesCount">0</strong><small>Achievements earned</small></article></div>
+  <article class="panel"><div class="panel-head"><h3>Level progress</h3><small id="levelProgressLabel">0 / 100 XP</small></div><div class="progress"><i id="levelProgressBar"></i></div></article>
+  <article class="panel"><h3>Achievement collection</h3><div id="achievementGrid" class="badge-grid"></div></article>
+  <article class="panel"><h3>How XP works</h3><p class="muted">Complete a task to earn XP once. Finish a focus session to earn extra XP. Your level and badges are calculated from your saved tasks and sessions.</p></article>
+</section>
+
+<section class="page" id="assistant">
+  <div class="section-intro"><span class="eyebrow">YOUR STUDY CO-PILOT</span><h2>Study assistant</h2><p>Generate practical plans from your tasks, deadlines, available time, and exam schedule.</p></div>
+  <div class="grid two">
+    <article class="panel"><h3>Build a study plan</h3><form id="assistantForm" class="form-grid one"><label>Available study time today (minutes)<input id="availableMinutes" type="number" min="15" max="720" value="120" required></label><label>Plan focus<select id="planFocus"><option value="balanced">Balanced — deadlines and priorities</option><option value="exams">Exam preparation first</option><option value="quick">Quick wins — shorter tasks first</option></select></label><label>What do you want help with?<textarea id="assistantPrompt" rows="3" maxlength="500" placeholder="e.g. Help me prepare for my data structures exam"></textarea></label><button class="button primary">Generate study plan</button></form><p class="muted note">Built-in planner works locally without an API key. It is rule-based, not a hosted generative AI model.</p></article>
+    <article class="panel"><div class="panel-head"><h3>Your study plan</h3><button id="copyPlan" class="button secondary">Copy plan</button></div><div id="assistantOutput" class="plan-output"><div class="empty">Generate a plan to see suggested study blocks here.</div></div></article>
+  </div>
+  <article class="panel"><h3>Break a task into steps</h3><form id="breakdownForm" class="inline breakdown-form"><label>Task to break down<input id="breakdownTask" required maxlength="180" placeholder="e.g. Prepare a DBMS assignment"></label><button class="button secondary">Create steps</button></form><div id="breakdownOutput" class="stack"></div></article>
+</section>
+
+<section class="page" id="settings">
+  <div class="section-intro"><span class="eyebrow">YOUR WORKSPACE</span><h2>Profile, settings & backup</h2><p>Personalize your workspace and keep a copy of your study data.</p></div>
+  <div class="grid two">
+    <article class="panel"><h3>Profile</h3><form id="profileForm" class="form-grid one"><label>Display name<input id="profileName" maxlength="60" placeholder="Your name"></label><label>Study goal / focus<input id="profileFocus" maxlength="120" placeholder="e.g. Build a consistent study routine"></label><label>Accent color<select id="accentColor"><option value="violet">Violet</option><option value="blue">Ocean blue</option><option value="green">Mint green</option><option value="rose">Rose</option></select></label><label>Appearance<select id="themeSelect"><option value="dark">Dark</option><option value="light">Light</option></select></label><button class="button primary">Save settings</button></form></article>
+    <article class="panel"><h3>Data backup</h3><p class="muted">Export tasks, exams, sessions, goals, rewards, profile, and study settings into one JSON file. Import a backup to restore it.</p><div class="stack"><button id="exportData" class="button primary">Export backup (.json)</button><label class="button secondary file-button">Import backup<input id="importData" type="file" accept=".json,application/json" hidden></label><button id="resetSettings" class="button danger">Reset profile settings</button></div><p class="muted note">Import replaces the current StudySprint data after confirmation. Export a backup first.</p></article>
+  </div>
+  <article class="panel"><h3>Privacy & AI</h3><p class="muted">Your data is stored in this browser's localStorage. The built-in study assistant does not send your tasks to an AI service. A real hosted AI assistant would require a backend and an API key; do not put secret API keys in frontend JavaScript.</p></article>
+</section>
+
+<footer class="footer"><span>StudySprint</span><span>Plan intentionally. Learn consistently.</span></footer>
+</main>
+</div>
+<div id="toastContainer" class="toast-container" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
